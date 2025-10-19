@@ -147,7 +147,7 @@ body::after {
   overflow-y: auto;
 }
 
-/* Make the entire checkout modal scrollable */
+/* ===== Scrollable Checkout Modal ===== */
 #checkout-form-container {
   position: fixed;
   top: 0;
@@ -155,22 +155,58 @@ body::after {
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.7);
-  display: none; /* stays hidden until opened */
+  display: none; /* modal stays hidden */
   justify-content: center;
   align-items: center;
-  overflow-y: auto; /* this allows scrolling */
+  overflow-y: auto; /* allows the full modal to scroll */
   padding: 20px;
   box-sizing: border-box;
+  z-index: 9999;
 }
 
-/* Make the inner form box scroll inside */
 #checkout-form-container form {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
+  max-width: 450px;
   width: 100%;
-  max-height: 90vh;       /* Prevents it from overflowing the screen */
-  overflow-y: auto;       /* Scrolls if the form is taller than viewport */
+  max-height: 90vh;        /* stops overflow beyond screen height */
+  overflow-y: auto;        /* allows scroll inside */
   box-sizing: border-box;
+}
+
+#checkout-form-container input,
+#checkout-form-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+#checkout-form-container button {
+  background-color: #1a5d1a;
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#checkout-form-container button:hover {
+  background-color: #145014;
+}
+
+/* Optional: Smooth modal open animation */
+#checkout-form-container.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
