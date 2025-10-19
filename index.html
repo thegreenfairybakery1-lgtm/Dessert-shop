@@ -394,41 +394,35 @@ checkoutBtn.addEventListener('click', ()=>{
   const total = cart.reduce((sum,item)=>sum+item.price,0);
   orderDetailsTextarea.value = orderText + `\n\nTotal: £${total}`;
   checkoutModal.style.display = 'flex';
+  // ===== Scrollable Checkout Modal Control =====
+const checkoutContainer = document.getElementById('checkout-form-container');
+const checkoutBtn = document.getElementById('checkout-btn');
+const closeCheckout = document.getElementById('close-checkout');
+
+// Open checkout modal
+if (checkoutBtn && checkoutContainer) {
+  checkoutBtn.addEventListener('click', () => {
+    checkoutContainer.classList.add('show');
+  });
+}
+
+// Close checkout modal
+if (closeCheckout && checkoutContainer) {
+  closeCheckout.addEventListener('click', () => {
+    checkoutContainer.classList.remove('show');
+  });
+}
+
+// Optional: Close modal by clicking outside the form
+if (checkoutContainer) {
+  checkoutContainer.addEventListener('click', (e) => {
+    if (e.target === checkoutContainer) {
+      checkoutContainer.classList.remove('show');
+    }
+  });
+}
+
 });
 </script>  
-</body>
-</html>
-<!-- Your website content and HTML goes here -->
-
-<!-- ✅ Add this at the very bottom of your HTML file -->
-<script>
-  // ===== Scrollable Checkout Modal Control =====
-  const checkoutContainer = document.getElementById('checkout-form-container');
-  const checkoutBtn = document.getElementById('checkout-btn');
-  const closeCheckout = document.getElementById('close-checkout');
-
-  // Open checkout modal
-  if (checkoutBtn && checkoutContainer) {
-    checkoutBtn.addEventListener('click', () => {
-      checkoutContainer.classList.add('show');
-    });
-  }
-
-  // Close checkout modal
-  if (closeCheckout && checkoutContainer) {
-    closeCheckout.addEventListener('click', () => {
-      checkoutContainer.classList.remove('show');
-    });
-  }
-
-  // Optional: close modal if user clicks outside the form
-  if (checkoutContainer) {
-    checkoutContainer.addEventListener('click', (e) => {
-      if (e.target === checkoutContainer) {
-        checkoutContainer.classList.remove('show');
-      }
-    });
-  }
-</script>
 </body>
 </html>
