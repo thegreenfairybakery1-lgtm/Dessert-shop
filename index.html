@@ -1,52 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Green Fairy Desserts</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Green Fairy Desserts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e6f4ea;
+      color: #2e4d35;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .checkout-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2e4d35;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #2e4d35;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      width: 100%;
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      margin-top: 1.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #2e4d35;
+    }
+
+    .back-btn {
+      background: #2e4d35;
+      margin-top: 0.5rem;
+    }
+
+    .back-btn:hover {
+      background: #4caf50;
+    }
+  </style>
 </head>
 <body>
-  <!-- 🔐 PASSWORD SCREEN -->
-  <div id="password-screen">
-    <h2>Welcome to Green Fairy Desserts 🧚‍♀️🍰</h2>
-    <p>Exclusive access. Enter the password:</p>
-    <input type="password" id="password-input" placeholder="Enter password">
-    <button onclick="checkPassword()">Enter</button>
-    <p id="error"></p>
+  <div class="checkout-container">
+    <h1>Checkout</h1>
+
+    <!-- Formspree Checkout Form -->
+    <form action="https://formspree.io/f/yourFormID" method="POST">
+      <label for="name">Full Name</label>
+      <input type="text" name="name" required>
+
+      <label for="address">Shipping Address</label>
+      <input type="text" name="address" required>
+
+      <label for="email">Email</label>
+      <input type="email" name="_replyto" required>
+
+      <label for="order">Order Details</label>
+      <textarea name="order" placeholder="e.g., 2x Fairy Brownies, 1x Matcha Cookie" required></textarea>
+
+      <button type="submit">Place Order</button>
+      <button type="button" class="back-btn" onclick="window.location.href='index.html'">Back to Shop</button>
+    </form>
   </div>
-
-  <!-- 🏪 SITE CONTENT -->
-  <div id="site-content" style="display:none;">
-    <header>
-      <h1>Green Fairy Desserts 🧚‍♀️</h1>
-      <div id="cart">
-        🛒 Cart: <span id="cart-count">0</span> items
-        <button onclick="checkout()">Checkout</button>
-      </div>
-    </header>
-
-    <section id="menu">
-      <h2>Our Menu</h2>
-      <div class="item">
-        <img src="images/cake.jpg" alt="Chocolate Cake">
-        <h3>Chocolate Cake</h3>
-        <p>$20.00</p>
-        <button onclick="addToCart('Chocolate Cake', 20)">Add to Cart</button>
-      </div>
-      <div class="item">
-        <img src="images/cupcakes.jpg" alt="Vanilla Cupcakes">
-        <h3>Vanilla Cupcakes (6 pcs)</h3>
-        <p>$15.00</p>
-        <button onclick="addToCart('Vanilla Cupcakes (6 pcs)', 15)">Add to Cart</button>
-      </div>
-    </section>
-
-    <footer>
-      <p>© 2025 Green Fairy Desserts 🧚‍♀️🍪</p>
-    </footer>
-  </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
