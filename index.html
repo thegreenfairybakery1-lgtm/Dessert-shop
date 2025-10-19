@@ -1,150 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Green Fairy Desserts</title>
-<style>
-body { font-family: Arial, sans-serif; background: #e6f4ea; margin:0; color:#2e4d35;}
-header { background: linear-gradient(135deg,#2e4d35,#4caf50); color:white; padding:1rem; display:flex; justify-content:space-between; align-items:center;}
-header h1{margin:0;} 
-#cart-btn {background:#4caf50;color:white;border:none;padding:0.5rem 1rem;border-radius:5px;cursor:pointer;}
-#cart-btn:hover {background:#2e4d35;}
-.items-container {display:flex; flex-wrap:wrap; justify-content:center; padding:1rem; gap:1rem;}
-.item {background:white; padding:1rem; border-radius:10px; width:220px; text-align:center; box-shadow:0 0 5px rgba(0,0,0,0.1);}
-.item img{max-width:100%; border-radius:10px;}
-.item h3{margin:0.5rem 0 0.25rem 0;}
-.item p{margin:0.25rem 0;font-weight:bold;}
-.item .description{font-size:0.85rem; color:#4d654d; min-height:35px;}
-.item button{background:#4caf50;color:white;border:none;padding:0.5rem;width:100%;cursor:pointer;border-radius:5px;}
-.item button:hover{background:#2e4d35;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Green Fairy Desserts</title>
+  <style>
+    body {font-family: Arial, sans-serif; background:#e6f4ea; color:#2e4d35; margin:0;}
+    header {background: linear-gradient(135deg,#2e4d35,#4caf50); color:white; padding:1rem; display:flex; justify-content:space-between; align-items:center;}
+    header h1 {margin:0;}
+    #cart-btn {background:#4caf50; color:white; border:none; padding:0.5rem 1rem; cursor:pointer; border-radius:5px;}
+    #cart-btn:hover {background:#2e4d35;}
+    .items-container {display:flex; flex-wrap:wrap; justify-content:center; padding:1rem; gap:1rem;}
+    .item {background:white; padding:1rem; border-radius:10px; width:220px; text-align:center; box-shadow:0 0 5px rgba(0,0,0,0.1);}
+    .item img {max-width:100%; border-radius:10px;}
+    .item h3 {margin:0.5rem 0 0.25rem 0;}
+    .item p {margin:0.25rem 0; font-weight:bold;}
+    .item button {background:#4caf50; color:white; border:none; padding:0.5rem; width:100%; cursor:pointer; border-radius:5px;}
+    .item button:hover {background:#2e4d35;}
+    .description {font-size:0.85rem; color:#4d654d; min-height:35px;}
 
-/* Cart */
-#cart-sidebar {position:fixed; top:0; right:-400px; width:350px; height:100%; background:white; box-shadow:-2px 0 10px rgba(0,0,0,0.2); transition:right 0.4s; padding:1rem; display:flex; flex-direction:column; z-index:999;}
-#cart-sidebar.active{right:0;}
-#cart-items{flex:1; overflow-y:auto; max-height:60vh; margin-bottom:1rem;}
-.cart-item{display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid #c6e6cc; gap:5px;}
-.cart-item span.name{flex:1; text-align:left;}
-.qty-controls{display:flex; align-items:center; gap:0.3rem;}
-.qty-controls button{background:#4caf50;color:white;border:none;padding:0.25rem 0.5rem; cursor:pointer;border-radius:5px; font-weight:bold;}
-.qty-controls span{min-width:20px; text-align:center;}
-.remove-btn{background:#e74c3c;color:white;border:none;padding:0.25rem 0.5rem; cursor:pointer;border-radius:5px;}
-.remove-btn:hover{background:#c0392b;}
-#close-cart, #checkout-btn{padding:0.5rem; border:none; cursor:pointer; border-radius:5px; margin-top:0.5rem;}
-#close-cart{background:#2e4d35;color:white;} #close-cart:hover{background:#4caf50;}
-#checkout-btn{background:#4caf50;color:white;} #checkout-btn:hover{background:#2e4d35;}
+    /* Cart Sidebar */
+    #cart-sidebar {position:fixed; top:0; right:-400px; width:350px; height:100%; background:white; box-shadow:-2px 0 10px rgba(0,0,0,0.2); transition:right 0.4s; padding:1rem; display:flex; flex-direction:column; z-index:999;}
+    #cart-sidebar.active {right:0;}
+    #cart-items {flex:1; overflow-y:auto; max-height:60vh; margin-bottom:1rem;}
+    .cart-item {display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid #c6e6cc;}
+    .cart-item span.name {flex:1; text-align:left;}
+    .qty-controls {display:flex; align-items:center; gap:0.3rem;}
+    .qty-controls button {background:#4caf50; color:white; border:none; padding:0.25rem 0.5rem; cursor:pointer; border-radius:5px; font-weight:bold;}
+    .remove-btn {background:#e74c3c; color:white; border:none; padding:0.25rem 0.5rem; cursor:pointer; border-radius:5px;}
+    .remove-btn:hover {background:#c0392b;}
+    #close-cart, #checkout-btn {padding:0.5rem; border:none; cursor:pointer; border-radius:5px; margin-top:0.5rem;}
+    #close-cart {background:#2e4d35; color:white;} 
+    #close-cart:hover {background:#4caf50;}
+    #checkout-btn {background:#4caf50; color:white;} 
+    #checkout-btn:hover {background:#2e4d35;}
 
-/* Checkout */
-#checkout-form-container{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:flex-start; overflow-y:auto; padding:20px; z-index:2000;}
-#checkout-form-container.show{display:flex;}
-#checkout-form-inner{background:white; padding:20px; border-radius:10px; width:90%; max-width:400px; margin:40px auto;}
-#checkout-form-inner h2{text-align:center;color:#2e4d35;}
-#checkout-form-inner label{display:block;margin-top:1rem;font-weight:bold;}
-#checkout-form-inner input, #checkout-form-inner textarea{width:100%; padding:0.5rem; margin-top:0.3rem; border:1px solid #2e4d35;border-radius:5px;}
-#checkout-form-inner button{width:100%; padding:0.75rem; margin-top:1rem;border:none;border-radius:5px; cursor:pointer;font-size:1rem;}
-#place-order{background:#4caf50;color:white;} #place-order:hover{background:#2e4d35;}
-#close-checkout{background:#2e4d35;color:white;} #close-checkout:hover{background:#4caf50;}
-@media(max-width:768px){#cart-sidebar{width:90%;}}
-</style>
+    /* Checkout Modal */
+    #checkout-form-container {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:flex-start; overflow-y:auto; padding:20px; z-index:2000;}
+    #checkout-form-container.show {display:flex;}
+    #checkout-form-inner {background:white; padding:20px; border-radius:10px; width:90%; max-width:400px; margin:40px auto;}
+    #checkout-form-inner h2 {text-align:center; color:#2e4d35;}
+    #checkout-form-inner label {display:block; margin-top:1rem; font-weight:bold;}
+    #checkout-form-inner input, #checkout-form-inner textarea {width:100%; padding:0.5rem; margin-top:0.3rem; border:1px solid #2e4d35; border-radius:5px;}
+    #checkout-form-inner button {width:100%; padding:0.75rem; margin-top:1rem; border:none; border-radius:5px; cursor:pointer; font-size:1rem;}
+    #place-order {background:#4caf50; color:white;} #place-order:hover {background:#2e4d35;}
+    #close-checkout {background:#2e4d35; color:white;} #close-checkout:hover {background:#4caf50;}
+    @media(max-width:768px){#cart-sidebar{width:90%;}}
+  </style>
 </head>
 <body>
+
 <header>
-<h1>Green Fairy Desserts</h1>
-<button id="cart-btn">Cart 🛒</button>
+  <h1>Green Fairy Desserts</h1>
+  <button id="cart-btn">Cart 🛒</button>
 </header>
 
 <div class="items-container">
-<!-- Products -->
-<div class="item" data-name="Large Vanilla Loaf" data-price="25">
-<img src="https://via.placeholder.com/200x150?text=Vanilla+Loaf" alt="">
-<h3>Large Vanilla Loaf</h3><p>£25</p><button>Add to Cart</button></div>
+  <!-- Main Products -->
+  <div class="item" data-name="Large Vanilla Loaf" data-price="20"><img src="https://via.placeholder.com/200x150?text=Vanilla+Loaf"><h3>Large Vanilla Loaf</h3><p>£20</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Cookie" data-price="15"><img src="https://via.placeholder.com/200x150?text=Cookie"><h3>Cookie</h3><p>£15</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Brownie Classic" data-price="10"><img src="https://via.placeholder.com/200x150?text=Brownie+Classic"><h3>Brownie Classic</h3><p>£10</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Brownie Chunks" data-price="25"><img src="https://via.placeholder.com/200x150?text=Brownie+Chunks"><h3>Brownie Chunks</h3><p>£25</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Dubai Chocolate Large Bar" data-price="70"><img src="https://via.placeholder.com/200x150?text=Dubai+Large"><h3>Dubai Chocolate Large Bar</h3><p>£70</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Dubai Chocolate Mini Bar" data-price="25"><img src="https://via.placeholder.com/200x150?text=Dubai+Mini"><h3>Dubai Chocolate Mini Bar</h3><p>£25</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Pick and Mix" data-price="30"><img src="https://via.placeholder.com/200x150?text=Pick+%26+Mix"><h3>Pick and Mix</h3><p>£30</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Nerds 10 Pack" data-price="50"><img src="https://via.placeholder.com/200x150?text=Nerds+10+Pack"><h3>Nerds 10 Pack</h3><p>£50</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Fairy Pen" data-price="60"><img src="https://via.placeholder.com/200x150?text=Fairy+Pen"><h3>Fairy Pen</h3><p>£60</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Fairy Shot" data-price="15"><img src="https://via.placeholder.com/200x150?text=Fairy+Shot"><h3>Fairy Shot</h3><p>£15</p><button>Add to Cart</button></div>
+  <div class="item" data-name="Gummies" data-price="35"><img src="https://via.placeholder.com/200x150?text=Gummies"><h3>Gummies</h3><p>£35</p><button>Add to Cart</button></div>
 
-<div class="item" data-name="Cookie" data-price="15">
-<img src="https://via.placeholder.com/200x150?text=Cookie" alt="">
-<h3>Cookie</h3><p>£15</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Gummies" data-price="35">
-<img src="https://via.placeholder.com/200x150?text=Gummies" alt="">
-<h3>Gummies</h3><p>£35</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Brownie Classic" data-price="10">
-<img src="https://via.placeholder.com/200x150?text=Brownie+Classic" alt="">
-<h3>Brownie Classic</h3><p>£10</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Brownie Chunks" data-price="25">
-<img src="https://via.placeholder.com/200x150?text=Brownie+Chunks" alt="">
-<h3>Brownie Chunks</h3><p>£25</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Dubai Chocolate Large Bar" data-price="70">
-<img src="https://via.placeholder.com/200x150?text=Dubai+Large" alt="">
-<h3>Dubai Chocolate Large Bar</h3><p>£70</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Dubai Chocolate Mini Bar" data-price="25">
-<img src="https://via.placeholder.com/200x150?text=Dubai+Mini" alt="">
-<h3>Dubai Chocolate Mini Bar</h3><p>£25</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Pick and Mix" data-price="30">
-<img src="https://via.placeholder.com/200x150?text=Pick+%26+Mix" alt="">
-<h3>Pick and Mix</h3><p>£30</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Nerds 10 Pack" data-price="50">
-<img src="https://via.placeholder.com/200x150?text=Nerds+10+Pack" alt="">
-<h3>Nerds 10 Pack</h3><p>£50</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Fairy Pen" data-price="60">
-<img src="https://via.placeholder.com/200x150?text=Fairy+Pen" alt="">
-<h3>Fairy Pen</h3><p>£60</p><button>Add to Cart</button></div>
-
-<div class="item" data-name="Fairy Shot" data-price="15">
-<img src="https://via.placeholder.com/200x150?text=Fairy+Shot" alt="">
-<h3>Fairy Shot</h3><p>£15</p><button>Add to Cart</button></div>
-
-<!-- Boxes -->
-<div class="item" data-name="Cookie Box" data-price="55">
-<img src="https://via.placeholder.com/200x150?text=Cookie+Box" alt="">
-<h3>Cookie Box</h3><p>£55</p><div class="description">6 Cookies, mixed flavours</div><button>Add to Cart</button></div>
-
-<div class="item" data-name="Tinkerbelle Box" data-price="35">
-<img src="https://via.placeholder.com/200x150?text=Tinkerbelle+Box" alt="">
-<h3>Tinkerbelle Box</h3><p>£35</p><div class="description">1 Cookie, 1 Brownie Slice, Gummies</div><button>Add to Cart</button></div>
-
-<div class="item" data-name="Fairy Delight Box" data-price="45">
-<img src="https://via.placeholder.com/200x150?text=Fairy+Delight+Box" alt="">
-<h3>Fairy Delight Box</h3><p>£45</p><div class="description">1 Vanilla Loaf, 1 Cookie, 3-pack Nerds</div><button>Add to Cart</button></div>
-
-<div class="item" data-name="Fairy Madness Box" data-price="150">
-<img src="https://via.placeholder.com/200x150?text=Fairy+Madness+Box" alt="">
-<h3>Fairy Madness Box</h3><p>£150</p><div class="description">2 Vanilla Loafs, 2 Cookies, 5-pack Nerds, Brownie Chunks, Fairy Shot, Fairy Pen</div><button>Add to Cart</button></div>
-
-<div class="item" data-name="Wand Box" data-price="75">
-<img src="https://via.placeholder.com/200x150?text=Wand+Box" alt="">
-<h3>Wand Box</h3><p>£75</p><div class="description">Fairy Pen, Gummies, Vanilla Loaf, Brownie Slice</div><button>Add to Cart</button></div>
-
-<div class="item" data-name="Green Reaper Box" data-price="100">
-<img src="https://via.placeholder.com/200x150?text=Green+Reaper+Box" alt="">
-<h3>Green Reaper Box</h3><p>£100</p><div class="description">2 Vanilla Loafs, 2 Cookies, 2 Brownie Slices</div><button>Add to Cart</button></div>
-
+  <!-- Deals -->
+  <div class="item" data-name="Cookie Box" data-price="55"><img src="https://via.placeholder.com/200x150?text=Cookie+Box"><h3>Cookie Box</h3><p>£55</p><div class="description">6 Cookies, mixed flavour</div><button>Add to Cart</button></div>
+  <div class="item" data-name="Tinkerbelle Box" data-price="35"><img src="https://via.placeholder.com/200x150?text=Tinkerbelle+Box"><h3>Tinkerbelle Box</h3><p>£35</p><div class="description">1 Cookie, 1 Brownie Slice, Gummies</div><button>Add to Cart</button></div>
+  <div class="item" data-name="Fairy Delight Box" data-price="45"><img src="https://via.placeholder.com/200x150?text=Fairy+Delight+Box"><h3>Fairy Delight Box</h3><p>£45</p><div class="description">1 Vanilla Loaf, 1 Cookie, 3-pack Nerds</div><button>Add to Cart</button></div>
+  <div class="item" data-name="Fairy Madness Box" data-price="150"><img src="https://via.placeholder.com/200x150?text=Fairy+Madness+Box"><h3>Fairy Madness Box</h3><p>£150</p><div class="description">2 Vanilla Loafs, 2 Cookies, 5-pack Nerds, Brownie Chunks, Fairy Shot, Fairy Pen</div><button>Add to Cart</button></div>
+  <div class="item" data-name="Wand Box" data-price="75"><img src="https://via.placeholder.com/200x150?text=Wand+Box"><h3>Wand Box</h3><p>£75</p><div class="description">Fairy Pen, Gummies, Vanilla Loaf, Brownie Slice</div><button>Add to Cart</button></div>
+  <div class="item" data-name="Green Reaper Box" data-price="100"><img src="https://via.placeholder.com/200x150?text=Green+Reaper+Box"><h3>Green Reaper Box</h3><p>£100</p><div class="description">2 Vanilla Loafs, 2 Cookies, 2 Brownie Slices</div><button>Add to Cart</button></div>
 </div>
 
-<!-- Cart -->
+<!-- Cart Sidebar -->
 <div id="cart-sidebar">
-<h2>Your Cart</h2>
-<div id="cart-items"></div>
-<p><strong>Total: £<span id="cart-total">0</span></strong></p>
-<button id="checkout-btn">Checkout</button>
-<button id="close-cart">Close</button>
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <p><strong>Total: £<span id="cart-total">0</span></strong></p>
+  <button id="checkout-btn">Checkout</button>
+  <button id="close-cart">Close</button>
 </div>
 
-<!-- Checkout -->
+<!-- Checkout Modal -->
 <div id="checkout-form-container">
-<div id="checkout-form-inner">
-<h2>Checkout</h2>
-<form action="https://formspree.io/f/xkgqebgp" method="POST">
-<label>Full Name</label><input type="text" name="Full Name" required>
-<label>Street Address</label><input type="text" name="Street Address" required>
-<label>City</label><input type="text" name="City" required>
-<label>County</label><input type="text" name="County" required>
-<label>Postcode</label><input type="text" name="Postcode" required>
-<label>Additional Notes (Optional)</label><textarea name="Notes"></textarea>
-<input type="hidden" name="Cart Items" id="form-cart-items">
-<input type="hidden" name="
+  <div id="checkout-form-inner">
+    <h2>Checkout (UK Only)</h2>
+    <form action="https://formspree.io/f/YOUR-FORMSPREE-ID" method="POST">
+      <label>Full Name</label>
+      <input type="text" name="Full Name" required>
+      <label>Street Address</label>
+      <input type="text" name="Street Address" required>
+      <label>City</label>
+      <input type="text" name="City" required>
+      <label>County</label>
+      <input type="text" name="County" required>
+      <label>Postcode</label>
+      <input type="text" name="Postcode" required>
+      <label>Order Details</label>
+      <textarea name="Cart Items" id="form-cart-items" readonly></textarea>
+      <label>Total (£)</label>
+      <input type="text" name="Total Price" id="form-total" readonly>
+      <label>Additional Notes</label>
+      <textarea name="Notes" placeholder="Optional instructions"></textarea>
+      <button type="submit" id="place-order">Place Order</button>
+      <button type="button" id="close-checkout">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const cartBtn = document.getElementById('cart-btn');
+  const cartSidebar = document.getElementById('cart-sidebar');
+  const closeCart = document.getElementById('close-cart');
+  const cartItemsContainer = document.getElementById('cart-items');
+  const cartTotalEl = document.getElementById('cart-total');
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const checkoutFormContainer = document.getElementById('checkout-form-container');
+  const closeCheckout = document.getElementById('close-checkout');
+  const formCartItems = document.getElementById('form-cart-items');
+  const formTotal = document.getElementById('form-total');
+
+  let cart = [];
+  const SHIPPING = 5;
+
+  cartBtn.addEventListener('click',()=>cartSidebar.classList.add('active'));
+  closeCart.addEventListener('click',()=>cartSidebar.classList.remove('active'));
+
+  document.querySelectorAll('.item button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const itemDiv=btn.parentElement;
+      const name=itemDiv.dataset.name;
+      const price=parseFloat(itemDiv.dataset.price);
+      const existing=cart.find(i=>i.name===name);
+      if(existing){existing.qty++;}else{cart.push({name,price,qty:1});}
+      renderCart();
+    });
+  });
+
+  function renderCart(){
+    cartItemsContainer.innerHTML='';
+    let total=0;
+    cart.forEach((item,index)=>{
+      total+=item.price*item.qty;
+      const div=document.createElement('div');
+      div.className='cart-item';
+      div.innerHTML=`<span class="name">${item.name}</span>
+      <div class="qty-controls">
+        <button class="decrease" data-index="${index}">-</button>
+        <span>${item.qty}</span>
+        <button class="increase" data-index="${index}">+</button>
+      </div>
+      <span>£${(item.price*item.qty).toFixed(2)}</span>
+      <button class="remove-btn" data-index="${index}">✕</button>`;
+      cartItemsContainer.appendChild(div);
+    });
+    const totalWithShipping = total + SHIPPING;
+    cartTotalEl.innerText = totalWithShipping.toFixed(2);
+    formCartItems.value = cart.map(i=>`${i.name} x${i.qty} - £${(i.price*i.qty).toFixed(2)}`).join('\n') + `\nShipping: £${SHIPPING}`;
+    formTotal.value = totalWithShipping.toFixed(2);
+
+    document.querySelectorAll('.increase').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const i=parseInt(btn.dataset.index);
+        cart[i].qty++;
+        renderCart();
+      });
+    });
+
+    document.querySelectorAll('.decrease').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const i=parseInt(btn.dataset.index);
+        if(cart[i].qty>1){cart[i].qty--;}else{cart.splice(i,1);}
+        renderCart();
+      });
+    });
+
+    document.querySelectorAll('.remove-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const i=parseInt(btn.dataset.index);
+        cart.splice(i,1);
+        renderCart();
+      });
+    });
+  }
+
+  checkoutBtn.addEventListener('click',()=>{
+    if(cart.length===0){alert('Cart is empty');return;}
+    checkoutFormContainer.classList.add('show');
+  });
+
+  closeCheckout.addEventListener('click',()=>checkoutFormContainer.classList.remove('show'));
+</script>
+</body>
+</html>
