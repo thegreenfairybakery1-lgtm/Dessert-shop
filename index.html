@@ -1,362 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Fairy Desserts</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #e6f4ea;
-  color: #2e4d35;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-header {
-  background: linear-gradient(135deg, #2e4d35, #4caf50);
-  color: white;
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-header h1 { font-size: 2rem; font-weight: bold; }
+  <meta charset="UTF-8">
+  <title>Green Fairy Desserts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e6f4ea;
+      color: #1a3d1a;
+    }
+    header {
+      background-color: #1a3d1a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product h3 {
+      margin: 10px 0 5px;
+    }
+    .product p {
+      font-size: 14px;
+    }
+    .product button {
+      background-color: #2e8b57;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .product button:hover {
+      background-color: #1a3d1a;
+    }
 
-.items-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 1rem;
-}
-.item {
-  background: white;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 10px;
-  width: 220px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  border: 1px solid #c6e6cc;
-  text-align: center;
-}
-.item img { max-width: 100%; border-radius: 10px; }
-.item button {
-  margin-top: 0.5rem;
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.item button:hover { background: #2e4d35; }
-.item .description { font-size: 0.85rem; color: #4d654d; margin-top: 0.5rem; }
+    /* Cart Sidebar */
+    #cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 300px;
+      height: 100%;
+      background-color: white;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+      transition: right 0.3s;
+      padding: 20px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    #cart-sidebar.active {
+      right: 0;
+    }
+    #cart-items {
+      margin-bottom: 20px;
+    }
+    #checkoutBtn, #close-cart {
+      background-color: #2e8b57;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 5px;
+    }
+    #close-cart {
+      background-color: #999;
+    }
 
-/* Cart Sidebar */
-#cart-sidebar {
-  position: fixed;
-  top: 0;
-  right: -400px;
-  width: 350px;
-  height: 100%;
-  background: #fff;
-  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
-  transition: right 0.4s ease;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  z-index: 999;
-}
-#cart-sidebar.active { right: 0; }
-#cart-items { flex: 1; overflow-y: auto; margin-bottom: 1rem; }
-.cart-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #c6e6cc;
-}
-.cart-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  margin-right: 0.5rem;
-  border-radius: 5px;
-}
-.cart-item span { flex: 1; text-align: left; }
-.cart-item button {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 0.25rem 0.5rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.cart-item button:hover { background: #c0392b; }
-
-#close-cart, #checkout-btn {
-  padding: 0.5rem;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 0.5rem;
-}
-#close-cart { background: #2e4d35; color: white; }
-#checkout-btn { background: #4caf50; color: white; }
-#close-cart:hover { background: #4caf50; }
-#checkout-btn:hover { background: #2e4d35; }
-
-/* Checkout Modal */
-#checkout-form-container {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  overflow-y: auto;
-  padding: 20px;
-}
-#checkout-form-container.show {
-  display: flex;
-  animation: fadeIn 0.3s ease;
-}
-#checkout-form-inner {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 400px;
-  width: 90%;
-  text-align: left;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-#checkout-form-inner h2 { text-align: center; color: #2e4d35; margin-top: 0; }
-#checkout-form-inner label { display: block; margin-top: 1rem; font-weight: bold; }
-#checkout-form-inner input, #checkout-form-inner textarea {
-  width: 100%; padding: 0.5rem; margin-top: 0.3rem;
-  border: 1px solid #2e4d35; border-radius: 5px; font-size: 1rem;
-}
-#checkout-form-inner textarea { resize: vertical; min-height: 80px; }
-#checkout-form-inner button {
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-#place-order { background: #4caf50; color: white; }
-#place-order:hover { background: #2e4d35; }
-#close-checkout { background: #2e4d35; color: white; margin-top: 0.5rem; }
-#close-checkout:hover { background: #4caf50; }
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .items-container { flex-direction: column; align-items: center; }
-  #cart-sidebar { width: 90%; }
-}
-</style>
+    /* Checkout Modal */
+    #checkout-form-container {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    #checkout-form-container.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    #checkout-form-inner {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 90%;
+      text-align: left;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    #close-checkout {
+      background-color: #999;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      background-color: #2e8b57;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    form button:hover {
+      background-color: #1a3d1a;
+    }
+    .cart-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #2e8b57;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1100;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Green Fairy Desserts</h1>
+  </header>
 
-<header>
-  <h1>Green Fairy Desserts</h1>
-  <button id="cart">Cart</button>
-</header>
+  <button class="cart-btn" onclick="toggleCart()">Cart 🛒</button>
 
-<div class="items-container">
-  <!-- Large Vanilla Loaf -->
-  <div class="item" data-img="large-vanilla-loaf.jpg">
-    <h3>Large Vanilla Loaf</h3>
-    <img src="large-vanilla-loaf.jpg" alt="">
-    <p>£20</p>
-    <button class="add-cart">Add to Cart</button>
+  <div class="products">
+    <div class="product">
+      <img src="images/loaf.jpg" alt="Large Vanilla Loaf">
+      <h3>Large Vanilla Loaf</h3>
+      <p>Classic vanilla loaf cake. £20</p>
+      <button onclick="addToCart('Large Vanilla Loaf', 20)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/cookie.jpg" alt="Cookie">
+      <h3>Cookie</h3>
+      <p>Single soft baked cookie. £15</p>
+      <button onclick="addToCart('Cookie', 15)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/brownie.jpg" alt="Brownie">
+      <h3>Brownie</h3>
+      <p>Classic brownie slice. £10</p>
+      <button onclick="addToCart('Brownie', 10)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/browniechunks.jpg" alt="Brownie Chunks">
+      <h3>Brownie Chunks</h3>
+      <p>Chopped up brownie bites. £25</p>
+      <button onclick="addToCart('Brownie Chunks', 25)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/dubai-large.jpg" alt="Dubai Chocolate Bar">
+      <h3>Dubai Chocolate Bar (Large)</h3>
+      <p>Premium large Dubai chocolate bar. £70</p>
+      <button onclick="addToCart('Dubai Chocolate Bar (Large)', 70)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/dubai-mini.jpg" alt="Mini Dubai Chocolate Bar">
+      <h3>Dubai Chocolate Bar (Mini)</h3>
+      <p>Mini Dubai chocolate bar. £25</p>
+      <button onclick="addToCart('Dubai Chocolate Bar (Mini)', 25)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/fairy-shot.jpg" alt="Fairy Shot">
+      <h3>Fairy Shot</h3>
+      <p>Signature fairy drink shot. £15</p>
+      <button onclick="addToCart('Fairy Shot', 15)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/nerds.jpg" alt="Nerds">
+      <h3>Nerds (10 Pack)</h3>
+      <p>10 pack of nerds sweets. £50</p>
+      <button onclick="addToCart('Nerds (10 Pack)', 50)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/picknmix.jpg" alt="Pick and Mix">
+      <h3>Pick and Mix</h3>
+      <p>Assorted pick and mix sweets. £30</p>
+      <button onclick="addToCart('Pick and Mix', 30)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/fairy-pen.jpg" alt="Fairy Pen">
+      <h3>Fairy Pen</h3>
+      <p>Magical fairy pen. £60</p>
+      <button onclick="addToCart('Fairy Pen', 60)">Add to Cart</button>
+    </div>
+
+    <!-- Deals -->
+    <div class="product">
+      <img src="images/cookiebox.jpg" alt="Cookie Box">
+      <h3>Cookie Box</h3>
+      <p>6 mixed cookies. £55</p>
+      <button onclick="addToCart('Cookie Box', 55)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/tinkerbelle-box.jpg" alt="Tinkerbelle Box">
+      <h3>Tinkerbelle Box</h3>
+      <p>1 cookie, 1 brownie slice, gummies. £35</p>
+      <button onclick="addToCart('Tinkerbelle Box', 35)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/fairy-delight.jpg" alt="Fairy Delight Box">
+      <h3>Fairy Delight Box</h3>
+      <p>1 vanilla loaf, 1 cookie, 3-pack Nerds. £45</p>
+      <button onclick="addToCart('Fairy Delight Box', 45)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/fairy-madness.jpg" alt="Fairy Madness Box">
+      <h3>Fairy Madness Box</h3>
+      <p>2 loafs, 2 cookies, 5-pack nerds, brownie chunks, fairy shot, fairy pen. £150</p>
+      <button onclick="addToCart('Fairy Madness Box', 150)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/wand-box.jpg" alt="Wand Box">
+      <h3>Wand Box</h3>
+      <p>Fairy pen, gummies, vanilla loaf, brownie slice. £75</p>
+      <button onclick="addToCart('Wand Box', 75)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/green-reaper.jpg" alt="Green Reaper Box">
+      <h3>Green Reaper Box</h3>
+      <p>2 loafs, 2 cookies, 2 brownie slices. £100</p>
+      <button onclick="addToCart('Green Reaper Box', 100)">Add to Cart</button>
+    </div>
   </div>
 
-  <!-- Cookies -->
-  <div class="item" data-img="white-choc-cookie.jpg">
-    <h3>Cookie - White Chocolate</h3><img src="white-choc-cookie.jpg" alt=""><p>£15</p><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="milk-choc-cookie.jpg">
-    <h3>Cookie - Milk Chocolate</h3><img src="milk-choc-cookie.jpg" alt=""><p>£15</p><button class="add-cart">Add to Cart</button>
-  </div>
-
-  <!-- Brownies -->
-  <div class="item" data-img="brownie.jpg">
-    <h3>Brownie - Classic</h3><img src="brownie.jpg" alt=""><p>£10</p><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="brownie-chunks.jpg">
-    <h3>Brownie Chunks</h3><img src="brownie-chunks.jpg" alt=""><p>£25</p><button class="add-cart">Add to Cart</button>
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <p id="cart-total"></p>
+    <button id="checkoutBtn">Checkout</button>
+    <button id="close-cart" onclick="toggleCart()">Close</button>
   </div>
 
-  <!-- Pick & Mix -->
-  <div class="item" data-img="pickmix.jpg">
-    <h3>Pick and Mix</h3><img src="pickmix.jpg" alt=""><p>£30</p><button class="add-cart">Add to Cart</button>
+  <!-- Checkout Modal -->
+  <div id="checkout-form-container">
+    <div id="checkout-form-inner">
+      <h2>Checkout</h2>
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <label>Full Name</label>
+        <input type="text" name="name" required>
+
+        <label>Shipping Address (UK only)</label>
+        <textarea name="address" required></textarea>
+
+        <label>Your Order</label>
+        <textarea name="order" id="order-details" readonly></textarea>
+
+        <button type="submit">Place Order</button>
+      </form>
+      <button id="close-checkout">Close</button>
+    </div>
   </div>
 
-  <!-- Nerds 10-pack -->
-  <div class="item" data-img="nerds-10.jpg">
-    <h3>Nerds 10-piece</h3><img src="nerds-10.jpg" alt=""><p>£50</p><button class="add-cart">Add to Cart</button>
-  </div>
+  <script>
+    const cart = [];
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const checkoutModal = document.getElementById('checkout-form-container');
+    const closeCheckoutBtn = document.getElementById('close-checkout');
+    const orderDetailsTextarea = document.getElementById('order-details');
 
-  <!-- Fairy Pen and Shot -->
-  <div class="item" data-img="fairy-pen.jpg">
-    <h3>Fairy Pen</h3><img src="fairy-pen.jpg" alt=""><p>£60</p><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="fairy-shot.jpg">
-    <h3>Fairy Shot</h3><img src="fairy-shot.jpg" alt=""><p>£15</p><button class="add-cart">Add to Cart</button>
-  </div>
+    function toggleCart() {
+      cartSidebar.classList.toggle('active');
+    }
 
-  <!-- Dubai Chocolate -->
-  <div class="item" data-img="dubai-large.jpg">
-    <h3>Dubai Chocolate - Large Bar</h3><img src="dubai-large.jpg" alt=""><p>£70</p><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="dubai-mini.jpg">
-    <h3>Dubai Chocolate - Mini Bar</h3><img src="dubai-mini.jpg" alt=""><p>£25</p><button class="add-cart">Add to Cart</button>
-  </div>
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCart();
+    }
 
-  <!-- Deals / Boxes -->
-  <div class="item" data-img="cookie-box.jpg">
-    <h3>Cookie Box</h3><p>£55</p><div class="description">6 cookies mixed flavours</div><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="tinkerbelle-box.jpg">
-    <h3>Tinkerbelle Box</h3><p>£35</p><div class="description">1 Cookie, 1 Brownie Slice, 1 Gummies</div><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="fairy-delight-box.jpg">
-    <h3>Fairy Delight Box</h3><p>£45</p><div class="description">1 Vanilla Loaf, 1 Cookie, 3-pack Nerds</div><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="fairy-madness-box.jpg">
-    <h3>Fairy Madness Box</h3><p>£150</p><div class="description">2 Loafs, 2 Cookies, 5-pack Nerds, Brownie Chunks, Fairy Shot, Fairy Pen</div><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="wand-box.jpg">
-    <h3>Wand Box</h3><p>£75</p><div class="description">Fairy Pen, Gummies, Loaf, Brownie Slice</div><button class="add-cart">Add to Cart</button>
-  </div>
-  <div class="item" data-img="green-reaper-box.jpg">
-    <h3>Green Reaper Box</h3><p>£100</p><div class="description">2 Loafs, 2 Cookies, 2 Brownie Slices</div><button class="add-cart">Add to Cart</button>
-  </div>
-</div>
+    function updateCart() {
+      cartItems.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const div = document.createElement('div');
+        div.textContent = `${item.name} - £${item.price}`;
+        cartItems.appendChild(div);
+      });
+      cartTotal.textContent = `Total: £${total}`;
+    }
 
-<!-- Cart Sidebar -->
-<div id="cart-sidebar">
-  <h2>Your Cart</h2>
-  <div id="cart-items"></div>
-  <strong id="cart-total" style="margin-top:1rem;font-size:1.2rem"></strong>
-  <button id="checkout-btn">Checkout</button>
-  <button id="close-cart">Close</button>
-</div>
+    checkoutBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      const orderText = cart.map(item => `${item.name} - £${item.price}`).join("\n");
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      orderDetailsTextarea.value = orderText + `\n\nTotal: £${total}`;
+      checkoutModal.classList.add('show');
+      cartSidebar.classList.remove('active');
+    });
 
-<!-- UK Checkout Modal -->
-<div id="checkout-form-container">
-  <div id="checkout-form-inner">
-    <h2>Checkout (UK Shipping)</h2>
-    <form action="https://formspree.io/f/xkgqebgp" method="POST">
-      <label for="full-name">Full Name</label>
-      <input type="text" name="full-name" required>
+    closeCheckoutBtn.addEventListener('click', () => {
+      checkoutModal.classList.remove('show');
+    });
 
-      <label for="email">Email</label>
-      <input type="email" name="email" required>
-
-      <label for="phone">Phone Number</label>
-      <input type="tel" name="phone">
-
-      <label for="address1">Address Line 1</label>
-      <input type="text" name="address1" required>
-
-      <label for="address2">Address Line 2</label>
-      <input type="text" name="address2">
-
-      <label for="city">City / Town</label>
-      <input type="text" name="city" required>
-
-      <label for="postcode">Postcode</label>
-      <input type="text" name="postcode" required>
-
-      <label for="country">Country</label>
-      <input type="text" name="country" value="United Kingdom" readonly>
-
-      <label for="message">Order Details</label>
-      <textarea name="message" id="order-details" required></textarea>
-
-      <label for="notes">Additional Notes</label>
-      <textarea name="notes" placeholder="Optional instructions"></textarea>
-
-      <button type="submit" id="place-order">Place Order</button>
-    </form>
-    <button id="close-checkout">Cancel</button>
-  </div>
-</div>
-
-<script>
-let cart = [];
-const cartBtn = document.getElementById('cart');
-const cartSidebar = document.getElementById('cart-sidebar');
-const closeCartBtn = document.getElementById('close-cart');
-const cartItemsContainer = document.getElementById('cart-items');
-const cartTotalEl = document.getElementById('cart-total');
-const checkoutBtn = document.getElementById('checkout-btn');
-const checkoutModal = document.getElementById('checkout-form-container');
-const closeCheckoutBtn = document.getElementById('close-checkout');
-const orderDetailsTextarea = document.getElementById('order-details');
-
-cartBtn.addEventListener('click', () => cartSidebar.classList.add('active'));
-closeCartBtn.addEventListener('click', () => cartSidebar.classList.remove('active'));
-closeCheckoutBtn.addEventListener('click', () => checkoutModal.classList.remove('show'));
-
-// Add to Cart
-document.querySelectorAll('.add-cart').forEach(button => {
-  button.addEventListener('click', () => {
-    const itemDiv = button.parentElement;
-    const name = itemDiv.querySelector('h3').innerText;
-    const price = parseFloat(itemDiv.querySelector('p').innerText.replace('£',''));
-    const img = itemDiv.getAttribute('data-img');
-    cart.push({name, price, img});
-    renderCart();
-  });
-});
-
-function renderCart() {
-  cartItemsContainer.innerHTML = '';
-  let total = 0;
-  cart.forEach((item,index)=>{
-    total += item.price;
-    const div = document.createElement('div');
-    div.className = 'cart-item';
-    const imgEl = document.createElement('img'); imgEl.src = item.img;
-    const span = document.createElement('span'); span.innerText = `${item.name} - £${item.price}`;
-    const removeBtn = document.createElement('button'); removeBtn.innerText = 'Remove';
-    removeBtn.addEventListener('click',()=>{cart.splice(index,1);renderCart();});
-    div.appendChild(imgEl); div.appendChild(span); div.appendChild(removeBtn);
-    cartItemsContainer.appendChild(div);
-  });
-  cartTotalEl.innerText = `Total: £${total}`;
-}
-
-checkoutBtn.addEventListener('click', () => {
-  if (cart.length === 0) {
-    alert('Your cart is empty!');
-    return;
-  }
-  const orderText = cart.map(item => `${item.name} - £${item.price}`).join("\n");
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
-  orderDetailsTextarea.value = orderText + `\n\nTotal: £${total}`;
-  checkoutModal.classList.add('show');
-  cartSidebar.classList.remove('active');
-});
-
-checkoutModal.addEventListener('click', (e) => {
-  if (e.target === checkoutModal) {
-    checkoutModal.classList.remove('show');
-  }
-});
-</script>
+    checkoutModal.addEventListener('click', (e) => {
+      if (e.target === checkoutModal) {
+        checkoutModal.classList.remove('show');
+      }
+    });
+  </script>
 </body>
 </html>
