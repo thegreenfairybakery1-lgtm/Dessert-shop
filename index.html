@@ -119,6 +119,8 @@ header h1 { font-size: 2rem; font-weight: bold; }
   <button id="cart">Cart</button>
 </header>
 
+<!-- Products Section -->
+
 <!-- Large Vanilla Loaf Cakes -->
 <div class="item">
   <h3>Large Vanilla Loaf - Oreo</h3>
@@ -265,4 +267,81 @@ header h1 { font-size: 2rem; font-weight: bold; }
     <h2>Checkout</h2>
     <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
       <label for="name">Name</label>
-      <input type="text" id
+      <input type="text" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" name="email" required>
+
+      <label for="message">Order Details</label>
+      <textarea name="message" required></textarea>
+
+      <button type="submit" id="place-order">Place Order</button>
+    </form>
+    <button id="close-checkout">Cancel</button>
+  </div>
+</div>
+
+<script>
+// Cart functionality
+const cartBtn = document.getElementById('cart');
+const cartSidebar = document.getElementById('cart-sidebar');
+const closeCartBtn = document.getElementById('close-cart');
+const cartItemsContainer = document.getElementById('cart-items');
+const checkoutBtn = document.getElementById('checkout-btn');
+const checkoutModal = document.getElementById('checkout-form-container');
+const closeCheckoutBtn = document.getElementById('close-checkout');
+
+let cart = [];
+
+// Show/hide cart
+cartBtn.addEventListener('click', () => cartSidebar.classList.add('active'));
+closeCartBtn.addEventListener('click', () => cartSidebar.classList.remove('active'));
+
+// Add to Cart buttons
+const addButtons = document.querySelectorAll('.item button');
+addButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const itemDiv = button.parentElement;
+    const name = itemDiv.querySelector('h3').innerText;
+    const priceText = itemDiv.querySelector('p').innerText;
+    const price = parseFloat(priceText.replace('£',''));
+    
+    cart.push({name, price});
+    renderCart();
+  });
+});
+
+// Render cart items
+function renderCart() {
+  cartItemsContainer.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price;
+    const div = document.createElement('div');
+    div.classList.add('cart-item');
+    div.innerHTML = `${item.name} - £${item.price} <button onclick="removeItem(${index})">Remove</button>`;
+    cartItemsContainer.appendChild(div);
+  });
+  const totalDiv = document.createElement('div');
+  totalDiv.style.marginTop = '1rem';
+  totalDiv.innerHTML = `<strong>Total: £${total}</strong>`;
+  cartItemsContainer.appendChild(totalDiv);
+}
+
+// Remove item from cart
+function removeItem(index) {
+  cart.splice(index,1);
+  renderCart();
+}
+
+// Checkout
+checkoutBtn.addEventListener('click', () => {
+  checkoutModal.style.display = 'flex';
+});
+closeCheckoutBtn.addEventListener('click', () => {
+  checkoutModal.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
