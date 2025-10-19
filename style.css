@@ -137,3 +137,12 @@ body::after {
   right: 25%;
   animation-delay: 2s;
 }
+/* Scrollable checkout modal */
+#checkout-form-container {
+  overflow-y: auto;
+}
+
+#checkout-form-inner {
+  max-height: 90vh;
+  overflow-y: auto;
+}
