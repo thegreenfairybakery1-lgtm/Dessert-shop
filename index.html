@@ -34,7 +34,7 @@ header h1 { font-size: 2rem; font-weight: bold; }
   margin: 1rem;
   padding: 1rem;
   border-radius: 10px;
-  width: 200px;
+  width: 220px;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
   border: 1px solid #c6e6cc;
   text-align: center;
@@ -116,7 +116,7 @@ header h1 { font-size: 2rem; font-weight: bold; }
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  overflow-y: auto; /* outer scroll for long content */
+  overflow-y: auto;
   padding: 20px;
 }
 #checkout-form-container.show {
@@ -131,7 +131,7 @@ header h1 { font-size: 2rem; font-weight: bold; }
   width: 90%;
   text-align: left;
   max-height: 90vh;
-  overflow-y: auto; /* scroll inside form */
+  overflow-y: auto;
 }
 #checkout-form-inner h2 { text-align: center; color: #2e4d35; margin-top: 0; }
 #checkout-form-inner label { display: block; margin-top: 1rem; font-weight: bold; }
@@ -174,36 +174,74 @@ header h1 { font-size: 2rem; font-weight: bold; }
 </header>
 
 <div class="items-container">
-  <!-- Sample Products -->
-  <div class="item" data-img="large-oreo-loaf.jpg">
-    <h3>Large Vanilla Loaf - Oreo</h3>
-    <img src="large-oreo-loaf.jpg" alt="">
+  <!-- Large Vanilla Loaf -->
+  <div class="item" data-img="large-vanilla-loaf.jpg">
+    <h3>Large Vanilla Loaf</h3>
+    <img src="large-vanilla-loaf.jpg" alt="">
     <p>£20</p>
     <button class="add-cart">Add to Cart</button>
   </div>
+
+  <!-- Cookies -->
   <div class="item" data-img="white-choc-cookie.jpg">
-    <h3>Cookie - White Chocolate</h3>
-    <img src="white-choc-cookie.jpg" alt="">
-    <p>£15</p>
-    <button class="add-cart">Add to Cart</button>
+    <h3>Cookie - White Chocolate</h3><img src="white-choc-cookie.jpg" alt=""><p>£15</p><button class="add-cart">Add to Cart</button>
   </div>
+  <div class="item" data-img="milk-choc-cookie.jpg">
+    <h3>Cookie - Milk Chocolate</h3><img src="milk-choc-cookie.jpg" alt=""><p>£15</p><button class="add-cart">Add to Cart</button>
+  </div>
+
+  <!-- Brownies -->
   <div class="item" data-img="brownie.jpg">
-    <h3>Brownie - Classic</h3>
-    <img src="brownie.jpg" alt="">
-    <p>£10</p>
-    <button class="add-cart">Add to Cart</button>
+    <h3>Brownie - Classic</h3><img src="brownie.jpg" alt=""><p>£10</p><button class="add-cart">Add to Cart</button>
   </div>
+  <div class="item" data-img="brownie-chunks.jpg">
+    <h3>Brownie Chunks</h3><img src="brownie-chunks.jpg" alt=""><p>£25</p><button class="add-cart">Add to Cart</button>
+  </div>
+
+  <!-- Pick & Mix -->
   <div class="item" data-img="pickmix.jpg">
-    <h3>Pick and Mix</h3>
-    <img src="pickmix.jpg" alt="">
-    <p>£30</p>
-    <button class="add-cart">Add to Cart</button>
+    <h3>Pick and Mix</h3><img src="pickmix.jpg" alt=""><p>£30</p><button class="add-cart">Add to Cart</button>
+  </div>
+
+  <!-- Nerds 10-pack -->
+  <div class="item" data-img="nerds-10.jpg">
+    <h3>Nerds 10-piece</h3><img src="nerds-10.jpg" alt=""><p>£50</p><button class="add-cart">Add to Cart</button>
+  </div>
+
+  <!-- Fairy Pen and Shot -->
+  <div class="item" data-img="fairy-pen.jpg">
+    <h3>Fairy Pen</h3><img src="fairy-pen.jpg" alt=""><p>£60</p><button class="add-cart">Add to Cart</button>
+  </div>
+  <div class="item" data-img="fairy-shot.jpg">
+    <h3>Fairy Shot</h3><img src="fairy-shot.jpg" alt=""><p>£15</p><button class="add-cart">Add to Cart</button>
+  </div>
+
+  <!-- Dubai Chocolate -->
+  <div class="item" data-img="dubai-large.jpg">
+    <h3>Dubai Chocolate - Large Bar</h3><img src="dubai-large.jpg" alt=""><p>£70</p><button class="add-cart">Add to Cart</button>
+  </div>
+  <div class="item" data-img="dubai-mini.jpg">
+    <h3>Dubai Chocolate - Mini Bar</h3><img src="dubai-mini.jpg" alt=""><p>£25</p><button class="add-cart">Add to Cart</button>
+  </div>
+
+  <!-- Deals / Boxes -->
+  <div class="item" data-img="cookie-box.jpg">
+    <h3>Cookie Box</h3><p>£55</p><div class="description">6 cookies mixed flavours</div><button class="add-cart">Add to Cart</button>
+  </div>
+  <div class="item" data-img="tinkerbelle-box.jpg">
+    <h3>Tinkerbelle Box</h3><p>£35</p><div class="description">1 Cookie, 1 Brownie Slice, 1 Gummies</div><button class="add-cart">Add to Cart</button>
+  </div>
+  <div class="item" data-img="fairy-delight-box.jpg">
+    <h3>Fairy Delight Box</h3><p>£45</p><div class="description">1 Vanilla Loaf, 1 Cookie, 3-pack Nerds</div><button class="add-cart">Add to Cart</button>
   </div>
   <div class="item" data-img="fairy-madness-box.jpg">
-    <h3>Fairy Madness Box</h3>
-    <p>£150</p>
-    <div class="description">2 Vanilla Loafs, 2 Cookies, 5-pack Nerds, Brownie Chunks, Fairy Shot, Fairy Pen</div>
-    <button class="add-cart">Add to Cart</button>
+    <h3>Fairy Madness Box</h3><p>£150</p><div class="description">2 Loafs, 2 Cookies, 5-pack Nerds, Brownie Chunks, Fairy Shot, Fairy Pen</div><button class="add-cart">Add to Cart</button>
+  </div>
+  <div class="item" data-img="wand-box.jpg">
+    <h3>Wand Box</h3><p>£75</p><div class="description">Fairy Pen, Gummies, Loaf, Brownie Slice</div><button class="add-cart">Add to Cart</button>
+  </div>
+  <div class="item" data-img="green-reaper-box.jpg">
+    <h3>Green Reaper Box</h3><p>£100</p><div class="description">2 Loafs, 2 Cookies, 2 Brownie Slices</div><button class="add-cart">Add to Cart</button>
   </div>
 </div>
 
@@ -314,7 +352,6 @@ checkoutBtn.addEventListener('click', () => {
   cartSidebar.classList.remove('active');
 });
 
-// Close modal when clicking outside
 checkoutModal.addEventListener('click', (e) => {
   if (e.target === checkoutModal) {
     checkoutModal.classList.remove('show');
