@@ -7,17 +7,23 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- 🔐 PASSWORD SCREEN -->
   <div id="password-screen">
-    <h2>Welcome to Green Fairy Desserts 🍰</h2>
+    <h2>Welcome to Green Fairy Desserts 🧚‍♀️🍰</h2>
     <p>Exclusive access. Enter the password:</p>
     <input type="password" id="password-input" placeholder="Enter password">
     <button onclick="checkPassword()">Enter</button>
     <p id="error"></p>
   </div>
 
+  <!-- 🏪 SITE CONTENT -->
   <div id="site-content" style="display:none;">
     <header>
-      <h1>Green Fairy Desserts 🧁</h1>
+      <h1>Green Fairy Desserts 🧚‍♀️</h1>
+      <div id="cart">
+        🛒 Cart: <span id="cart-count">0</span> items
+        <button onclick="checkout()">Checkout</button>
+      </div>
     </header>
 
     <section id="menu">
@@ -26,18 +32,18 @@
         <img src="images/cake.jpg" alt="Chocolate Cake">
         <h3>Chocolate Cake</h3>
         <p>$20.00</p>
-        <button onclick="window.open('https://www.paypal.me/YOURPAYPAL/20')">Buy Now</button>
+        <button onclick="addToCart('Chocolate Cake', 20)">Add to Cart</button>
       </div>
       <div class="item">
-        <img src="images/cupcakes.jpg" alt="Cupcakes">
+        <img src="images/cupcakes.jpg" alt="Vanilla Cupcakes">
         <h3>Vanilla Cupcakes (6 pcs)</h3>
         <p>$15.00</p>
-        <button onclick="window.open('https://www.paypal.me/YOURPAYPAL/15')">Buy Now</button>
+        <button onclick="addToCart('Vanilla Cupcakes (6 pcs)', 15)">Add to Cart</button>
       </div>
     </section>
 
     <footer>
-      <p>© 2025 Green Fairy Desserts 🍪</p>
+      <p>© 2025 Green Fairy Desserts 🧚‍♀️🍪</p>
     </footer>
   </div>
 
